@@ -1,0 +1,26 @@
+Product.objects.all() ➤ барлық продуктты көру
+
+Category.objects.create(name="Жаңа категория")
+
+Product.objects.filter(price__gt=20000)
+
+➤ 1. Жаңа продукт қос
+Product.objects.create(name="Test", price=1000, quantity=5, category_id=1)
+
+➤ 2. Фильтр (баға бойынша)
+Product.objects.filter(price__gt=10000)
+
+➤ 3. Фильтр (мәтін бойынша)
+Product.objects.filter(name__icontains="а")
+
+➤ 4. Екі шарт бірге
+Product.objects.filter(price__gte=10000, name__icontains="а")
+
+➤ 5. Сортировка
+Product.objects.order_by('-price')
+
+➤ 6. Update
+Product.objects.filter(id=1).update(price=99999)
+
+➤ 7. Delete
+Product.objects.filter(id=1).delete()

@@ -1,17 +1,16 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Басты бет</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h1>Басты бет</h1>
+{% block title %}Басты бет - Санаттар{% endblock %}
 
-<a href="/about/">Мен туралы</a>
-<a href="/projects/1">Жобалар</a>
-<a href="/info/">Ақпарат</a>
-
-</body>
-</html>
+{% block content %}
+    <h2>Санаттар тізімі</h2>
+    <ul>
+        {% for category in categories %}
+            <li>
+                <a href="{% url 'catalog' category.id %}">{{ category.name }}</a>
+            </li>
+        {% empty %}
+            <li>Санаттар әлі қосылмаған.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

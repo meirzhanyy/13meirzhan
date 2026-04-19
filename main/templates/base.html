@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Интернет-дүкен{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}">Магазин</a></h1>
+        <nav>
+            <a href="{% url 'home' %}">Басты бет</a> | 
+            <a href="{% url 'add_category' %}">+ Санат қосу</a> | 
+            <a href="{% url 'add_product' %}">+ Өнім қосу</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Барлық құқықтар қорғалған. | Meirzhan</p>
+    </footer>
+</body>
+</html>

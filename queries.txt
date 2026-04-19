@@ -1,0 +1,51 @@
+cd C:\Users\meirz\myproject
+python manage.py makemigrations
+python manage.py migrate
+python manage.py shellor
+
+from main.models import Category, Product, Order
+
+c1 = Category.objects.create(name="Электроника")
+c2 = Category.objects.create(name="Киім")
+c3 = Category.objects.create(name="Кітаптар")
+c4 = Category.objects.create(name="Спорт")
+c5 = Category.objects.create(name="Тағам")
+
+Product.objects.create(name="iPhone 13", price=500000, quantity=10, category=c1)
+Product.objects.create(name="Samsung A52", price=200000, quantity=15, category=c1)
+Product.objects.create(name="Ноутбук", price=700000, quantity=5, category=c1)
+
+Product.objects.create(name="Футболка", price=5000, quantity=50, category=c2)
+Product.objects.create(name="Джинсы", price=15000, quantity=20, category=c2)
+Product.objects.create(name="Куртка", price=30000, quantity=10, category=c2)
+
+Product.objects.create(name="Python кітабы", price=8000, quantity=25, category=c3)
+Product.objects.create(name="Django кітабы", price=9000, quantity=15, category=c3)
+Product.objects.create(name="ML кітабы", price=12000, quantity=10, category=c3)
+
+Product.objects.create(name="Доп", price=7000, quantity=30, category=c4)
+Product.objects.create(name="Гантель", price=10000, quantity=20, category=c4)
+Product.objects.create(name="Йога коврик", price=6000, quantity=15, category=c4)
+
+Product.objects.create(name="Алма", price=1000, quantity=100, category=c5)
+Product.objects.create(name="Нан", price=500, quantity=200, category=c5)
+Product.objects.create(name="Сүт", price=700, quantity=150, category=c5)
+
+In [4]: Product.objects.filter(price__gte=10000, name__icontains="а")
+Out[4]: <QuerySet [<Product: Куртка>, <Product: ML кітабы>, <Product: Гантель>]>
+
+In [5]: Product.objects.all().order_by('-price')
+Out[5]: <QuerySet [<Product: Ноутбук>, <Product: iPhone 13>, <Product: Samsung A52>, <Product: Куртка>, <Product: Джинсы>, <Product: ML кітабы>, <Product: Гантель>, <Product: Django кітабы>, <Product: Python кітабы>, <Product: Доп>, <Product: Йога коврик>, <Product: Футболка>, <Product: Алма>, <Product: Сүт>, <Product: Нан>]>
+
+In [6]: Product.objects.filter(price__lt=10000).update(price=12000)
+Out[6]: 8
+
+In [7]: Product.objects.filter(quantity__lt=15).delete()
+Out[7]: (4, {'main.Product': 4})
+
+(((((коментарий қосу
+from main.models import Product, Review
+
+p = Product.objects.get(id=1)
+
+Review.objects.create(product=p, text="Керемет тауар! Сапасы өте жоғары, барлығына кеңес беремін.")

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+    <h2>{{ product.name }}</h2>
+    <p><strong>Бағасы:</strong> {{ product.price }} тг</p>
+    <p><strong>Қоймада:</strong> {{ product.quantity }} дана</p>
+    <p><strong>Санаты:</strong> {{ product.category.name }}</p>
+    <p><strong>id:</strong> {{ product.id }}</p>
+
+    ### Пікірлер
+    {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+                <li>{{ review.text }} ({{ review.created_at|date:"d.m.Y" }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Әзірге пікірлер жоқ, бірінші болып пікір қалдырыңыз! [cite: 30]</p>
+    {% endif %}
+
+    <hr>
+    <div style="margin-top: 20px;">
+        <a href="{% url 'add_review' product.id %}" style="background-color: #2980b9; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">
+            + Пікір қалдыру
+        </a>
+    </div>
+    <br>
+    <a href="{% url 'catalog' product.category.id %}">← Санатқа қайту</a>
+{% endblock %}

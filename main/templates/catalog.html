@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} - Каталог{% endblock %}
+
+{% block content %}
+    <h2>{{ category.name }} санатындағы тауарлар</h2>
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a> - {{ product.price }} тг
+            </li>
+        {% empty %}
+            <li>Бұл санатта әзірге тауарлар жоқ.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

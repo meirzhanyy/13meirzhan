@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Пікір қалдыру{% endblock %}
+{% block content %}
+    <h2>{{ product.name }} өніміне пікір қалдыру</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Пікірді жіберу</button>
+    </form>
+    <br>
+    <a href="{% url 'product_detail' product.id %}">Кері қайту</a>
+{% endblock %}

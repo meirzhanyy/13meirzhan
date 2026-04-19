@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Жаңа өнім қосу{% endblock %}
+{% block content %}
+    <h2>Каталогқа жаңа өнім қосу</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Тауарды қосу</button>
+    </form>
+{% endblock %}

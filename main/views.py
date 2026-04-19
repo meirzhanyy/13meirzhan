@@ -1,39 +1,54 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Category, Product, Review
+from .forms import CategoryForm, ProductForm, ReviewForm
 
-# 1. Басты бет
+# --- №11 Зертханалық жұмыс функциялары (Көрсету) ---
+
 def home(request):
-    return render(request, 'home.html')
+    categories = Category.objects.all()
+    return render(request, 'home.html', {'categories': categories})
 
-# 2. About
-def about(request):
-    return render(request, 'about.html')
+def catalog(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    products = category.products.all()
+    return render(request, 'catalog.html', {'category': category, 'products': products})
 
-# 3. Dynamic project
-def project_detail(request, project_id):
-    if project_id == 1:
-        title = "Жоба 1"
-        description = "Бұл бірінші жоба туралы ақпарат"
-    elif project_id == 2:
-        title = "Жоба 2"
-        description = "Бұл екінші жоба туралы ақпарат"
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    reviews = product.reviews.all()
+    return render(request, 'product_detail.html', {'product': product, 'reviews': reviews})
+
+# --- №12 Зертханалық жұмыс функциялары (Мәлімет қосу) ---
+
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
     else:
-        title = f"Жоба {project_id}"
-        description = "Белгісіз жоба"
+        form = CategoryForm()
+    return render(request, 'add_category.html', {'form': form})
 
-    return render(request, 'project.html', {
-    'title': title,
-    'description': description,
-    'id': project_id
-})
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ProductForm()
+    return render(request, 'add_product.html', {'form': form})
 
-# 4. Info page
-def info(request):
-    ip = request.META.get('REMOTE_ADDR')
-    user_agent = request.META.get('HTTP_USER_AGENT')
-
-    return HttpResponse(f"""
-    <h2>Пайдаланушы туралы ақпарат</h2>
-    <p><b>IP:</b> {ip}</p>
-    <p><b>Browser:</b> {user_agent}</p>
-    """)
+def add_review(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.save()
+            return redirect('product_detail', product_id=product.id)
+    else:
+        form = ReviewForm()
+    return render(request, 'add_review.html', {'form': form, 'product': product})
