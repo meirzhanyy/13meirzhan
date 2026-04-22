@@ -1,0 +1,12 @@
+<h2>Кіру</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Логин">
+    <input type="password" name="password" placeholder="Пароль">
+    <button type="submit">Кіру</button>
+</form>
+
+{% if error %}
+<p>{{ error }}</p>
+{% endif %}
