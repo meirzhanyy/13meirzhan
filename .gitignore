@@ -1,0 +1,11 @@
+# Секретные данные — никогда не загружать в git!
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Django
+db.sqlite3
+staticfiles/
